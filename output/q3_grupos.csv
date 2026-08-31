@@ -1,0 +1,11 @@
+﻿variavel,grupo,n,adr_med,rev_proxy_med
+Nº de quartos,1 quarto,136,384.5,33807.0
+Nº de quartos,2 quartos,346,450.0,45000.0
+Nº de quartos,3 quartos,400,650.0,71400.0
+Nº de quartos,4 quartos,75,975.0,108000.0
+Tipo de imóvel,apartamento,893,557.0,57600.0
+Tipo de imóvel,casa,66,470.0,61500.0
+Superhost,Não,544,575.0,42000.0
+Superhost,Sim,433,518.0,78000.0
+Nota média,"< 4,8",155,523.0,55851.42600000001
+Nota média,">= 4,8",822,550.0,57000.0

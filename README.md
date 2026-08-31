@@ -1,47 +1,59 @@
-# Hackathon Jovens Talentos AI Builder 2026 — Seazone
+> **Vídeo (Entregável 2):** https://drive.google.com/file/d/1YCM5gTr8WxxYuDRr4NKCbqy_Ea2WimQE/view?usp=sharing — compartilhamento em "qualquer pessoa com o link".
 
-## 👉 Leia o desafio aqui
+> **Transcrição (Entregável 2):** https://drive.google.com/file/d/1YCM5gTr8WxxYuDRr4NKCbqy_Ea2WimQE/view?usp=sharing — compartilhamento em "qualquer pessoa com o link".
 
-### **[ABRIR O DESAFIO COMPLETO](https://seazone-tech.github.io/jovens-talentos-2026-hackathon-data/)**
+# Hackathon Jovens Talentos AI Builder 2026 — Seazone · Itapema (SC)
 
-Lá está tudo: a missão, os dados, **o que entregar**, as regras, o prazo e **como vamos avaliar**.
-Leia antes de começar a mexer nos dados.
+Recomendação de investimento imobiliário para a Seazone, construída com IA a partir dos dados
+reais de anúncios de Airbnb e VivaReal de Itapema.
 
-> Se o link acima não abrir, o mesmo conteúdo está no arquivo [`index.html`](index.html) deste repositório
-> (baixe e abra no navegador).
+- **Enunciado do desafio:** [`index.html`](index.html) (abra no navegador).
+- **Resposta final:** [`relatorio.md`](relatorio.md).
+- **Processo completo com a IA:** pasta [`ai-log/`](ai-log/) (conversa exportada em texto, parte da avaliação).
+- **Código da análise:** [`analise.py`](analise.py) (um único script, reproduzível).
 
----
+## Como rodar
 
-## Primeiro passo
+Requisitos: **Python 3.9+** com **pandas** (única dependência).
 
-**Faça um _fork_ deste repositório.** É nele que você vai trabalhar e é ele que você entrega.
+```powershell
+pip install pandas
+python analise.py
+```
 
----
+O script lê os arquivos de `data/`, **regenera** as planilhas de `output/` e **reescreve**
+`relatorio.md` com a recomendação. Não precisa de mais nada — dados já estão no repositório.
 
-## Os dados (`data/`)
+Para conferir a saída sem rodar, os resultados já estão commitados em `output/` e `relatorio.md`.
 
-Snapshot estático do mercado imobiliário de **Itapema (SC)**, com anúncios de Airbnb e de venda (VivaReal).
-É a mesma base para todos os candidatos, para garantir comparação justa.
+## Onde está a resposta
 
-| Arquivo | O que tem | Como conecta |
+| Pergunta do desafio | Resposta (em `relatorio.md`) | Planilha de apoio (`output/`) |
 |---|---|---|
-| `Details_Itapema.csv` | Cada anúncio de Airbnb: título, reviews, star rating, descrição, host_id, nº de quartos, tipo de imóvel | Base principal dos listings |
-| `Hosts_ids_Itapema.csv` | Dados do anfitrião: nº de reviews, anos como host, superhost, taxa de resposta | Liga com Details pelo `owner_id` |
-| `Mesh_Ids_Data_Itapema.csv` | Latitude/longitude + bairro de cada anúncio | Liga por listing |
-| `Price_AV_Itapema.csv` | Preço por anúncio, por data de estadia e por data de captura | Liga por listing |
-| `VivaReal_Itapema.csv` | Anúncios de venda: preço, condomínio, área, vendedor | Mercado de compra |
+| 1. Melhor perfil de imóvel | Seção "Pergunta 1" | `q1_perfil.csv` |
+| 2. Melhor localização | Seção "Pergunta 2" | `q2_localizacao.csv` |
+| 3. Características que explicam a receita | Seção "Pergunta 3" | `q3_correlacoes.csv`, `q3_grupos.csv` |
+| 4. O que comprar + retorno estimado | Seção "Pergunta 4" | `q4_yield_cidade.csv`, `q4_yield_bairro.csv`, `q4_preco_cidade.csv`, `q4_robustez.csv` |
+| Posição sobre a tese (compactos no Centro) | Seção "Posição sobre a tese interna" | `q1_perfil.csv`, `q4_yield_bairro.csv` |
+| Contexto do mercado Airbnb por bairro | Seção "Premissas e decisões" | `mercado_contexto.csv` |
+| VivaReal normalizado (bairros padronizados) | Seção "Premissas e decisões" | `viva_normalizado.csv` |
 
----
+## Estrutura do repositório
 
-## Resumo do que você entrega
+```
+analise.py            Código da análise (limpeza, receita, Q1–Q4, gera o relatório)
+relatorio.md          RESPOSTA FINAL escrita (recomendação + posição sobre a tese)
+output/*.csv          Planilhas de apoio geradas pelo script (1 por pergunta)
+ai-log/               Conversas com a IA exportadas em texto (avaliação de processo)
+data/                 Snapshot dos dados do desafio (Airbnb + VivaReal)
+index.html            Enunciado do desafio (baixe e abra no navegador)
+```
 
-1. **Este repositório, forkado e público**, com a sua análise, o `README.md` explicando como rodar,
-   a pasta `ai-log/` (conversas com a IA **em texto**) e a recomendação final escrita.
-2. **Vídeo de até 3 minutos** no Google Drive, com o link na primeira linha do seu README.
+## Método em poucas linhas
 
-O detalhe de cada item, o prazo e o formulário de entrega estão no
-**[desafio completo](https://seazone-tech.github.io/jovens-talentos-2026-hackathon-data/)**.
-
----
-
-*Seazone — Jovens Talentos AI Builder 2026*
+- Receita anual estimada por anúncio a partir do preço por noite (última captura por data) e
+  do nº de avaliações como proxy de noites alugadas; sensibilidade testada com cenários de
+  ocupação (25% / 35% / 45%) — ver `q4_robustez.csv`.
+- Retorno (Q4) = **gross yield**: receita estimada ÷ preço mediano de venda (VivaReal), por
+  perfil e por perfil × bairro.
+- Detalhes, premissas e limitações estão documentados em [`relatorio.md`](relatorio.md).

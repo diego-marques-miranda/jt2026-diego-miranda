@@ -1,0 +1,11 @@
+﻿perfil,n_venda,price_med
+apartamento|1 quarto,160,750000.0
+apartamento|2 quartos,1769,823987.0
+apartamento|3 quartos,3171,1800000.0
+apartamento|4 quartos,2147,3500000.0
+apartamento|5+ quartos,138,8000000.0
+casa|1 quarto,2,2300000.0
+casa|2 quartos,218,574500.0
+casa|3 quartos,220,823646.0
+casa|4 quartos,53,4700000.0
+casa|5+ quartos,23,14950000.0
